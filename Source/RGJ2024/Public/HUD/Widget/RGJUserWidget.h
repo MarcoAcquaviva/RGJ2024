@@ -13,5 +13,7 @@ UCLASS()
 class RGJ2024_API URGJUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
+
+	virtual void NativeConstruct() override;
 	
 };

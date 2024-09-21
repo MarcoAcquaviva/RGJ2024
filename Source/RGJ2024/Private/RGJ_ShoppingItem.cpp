@@ -15,12 +15,14 @@ ARGJ_ShoppingItem::ARGJ_ShoppingItem()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
+	SetHidden(true);
+	
 
 	Mesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	Mesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
 	Mesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Block);
 	Mesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+	Mesh->SetSimulatePhysics(false);
 	SetRootComponent(Mesh);
 
 	PriceWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("PriceWidgetComponent"));
@@ -29,6 +31,7 @@ ARGJ_ShoppingItem::ARGJ_ShoppingItem()
 
 void ARGJ_ShoppingItem::Destroyed()
 {
+	IsDestroyed = true;
 	if (OnDestorySound)
 	{
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), OnDestorySound, GetActorLocation());

@@ -7,9 +7,6 @@
 void ARGJHUD::InitOverlay()
 {
 	UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), PlayerWidgetClass);
+	Widget->AddToViewport();
 	PlayerWidget = Cast<URGJUserWidget>(Widget);
-	if (PlayerWidget)
-	{
-		PlayerWidget->AddToViewport();
-	}
 }
