@@ -10,7 +10,7 @@ class UWidgetComponent;
 class UProjectileMovementComponent;
 class USoundCue;
 class UParticleSystem;
-
+struct FShopAttributeInfo;
 UCLASS()
 class RGJ2024_API ARGJ_ShoppingItem : public AActor
 {
@@ -53,6 +53,10 @@ private:
 	UPROPERTY(EditAnywhere, Category="OnSpawn")
 	TObjectPtr<UParticleSystem> OnSpawnParticle;
 
+	UPROPERTY(EditAnywhere)
+	TArray<FShopAttributeInfo> Attributes;
+
 public:
 	FORCEINLINE float GetPrice() const { return Price; }
+	FORCEINLINE TArray<FShopAttributeInfo>  GetAttributes() const { return Attributes; }
 };

@@ -9,6 +9,7 @@
 #include "Kismet/KismetMathLibrary.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Sound/SoundCue.h"
+#include "Game/RGJGameStateBase.h"
 
 // Sets default values
 ARGJ_ShoppingItem::ARGJ_ShoppingItem()

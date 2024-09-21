@@ -6,6 +6,29 @@
 #include "GameFramework/GameStateBase.h"
 #include "RGJGameStateBase.generated.h"
 
+UENUM(BlueprintType)
+enum class E_ShopAttribute : uint8
+{
+	Fame UMETA(DisplayName = "Fame") ,
+	Gioco UMETA(DisplayName = "Gioco"),
+	Batteria UMETA(DisplayName = "Batteria"),
+	Sole UMETA(DisplayName = "Sole"),
+	Notte UMETA(DisplayName = "Notte"),
+	Lavoro UMETA(DisplayName = "Lavoro"),
+};
+
+USTRUCT(BlueprintType)
+struct FShopAttributeInfo
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere)
+	E_ShopAttribute Type = E_ShopAttribute::Batteria;
+
+	UPROPERTY(EditAnywhere)
+	float Value = 0;
+};
+
 class ARGJ_ShoppingItem;
 
 /**
@@ -16,9 +39,13 @@ class RGJ2024_API ARGJGameStateBase : public AGameStateBase
 {
 	GENERATED_BODY()
 	
+public: 
+
 public:
 	UPROPERTY(BlueprintReadWrite)
 	TArray<ARGJ_ShoppingItem*> AllShopItems;
+	UPROPERTY(BlueprintReadWrite)
+	TArray<ARGJ_ShoppingItem*> AllShopItemCollected;
 	UPROPERTY(VisibleAnywhere, Category = "Spawn")
 	int SpawnCounter = 0;
 	UPROPERTY(EditAnywhere, Category = "Spawn")
@@ -30,11 +57,24 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = "Money")
 	float CurretMoneyValue = 0.f;
 
+	UPROPERTY(EditAnywhere)
+	TArray<FShopAttributeInfo> Attributes;
+
+	UPROPERTY(VisibleAnywhere)
+	TArray<FShopAttributeInfo> AttributesChosen;
+
+	UPROPERTY(EditAnywhere)
+	int32 MaxAttributePerGame = 3;
+
 	bool CheckIfGameEnded();
 	bool DidPlayerWin();
 
 	UFUNCTION(BlueprintCallable)
 	float GetTotalAmout();
 
+	void CalculateAttributeValue();
+
+private: 
+	void InitAttributes();
 
 };
