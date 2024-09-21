@@ -26,6 +26,7 @@ ARGJ_ShoppingItem::ARGJ_ShoppingItem()
 	SetRootComponent(Mesh);
 
 	PriceWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("PriceWidgetComponent"));
+	PriceWidgetComponent->AttachToComponent(Mesh, FAttachmentTransformRules::KeepWorldTransform);
 	HideWidget();	
 }
 

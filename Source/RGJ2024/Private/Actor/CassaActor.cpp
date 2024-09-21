@@ -23,9 +23,11 @@ ACassaActor::ACassaActor()
 
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
 	BoxCollision->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
+	BoxCollision->AttachToComponent(Mesh, FAttachmentTransformRules::KeepWorldTransform);
 
 	PriceWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("PriceWidgetComponent"));
 	PriceWidgetComponent->SetVisibility(true);
+	PriceWidgetComponent->AttachToComponent(Mesh, FAttachmentTransformRules::KeepWorldTransform);
 	UpdatePriceWidget();
 }
 
