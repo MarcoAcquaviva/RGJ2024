@@ -7,7 +7,12 @@
 		{
 			"Name": "RGJ2024",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine",
+				"UMG",
+				"EnhancedInput"
+			]
 		}
 	],
 	"Plugins": [
