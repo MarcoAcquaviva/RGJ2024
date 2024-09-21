@@ -27,6 +27,9 @@ struct FShopAttributeInfo
 
 	UPROPERTY(EditAnywhere)
 	float Value = 0;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UObject> Image;
 };
 
 class ARGJ_ShoppingItem;
@@ -72,9 +75,11 @@ public:
 	UFUNCTION(BlueprintCallable)
 	float GetTotalAmout();
 
+	UFUNCTION(BlueprintCallable)
 	void CalculateAttributeValue();
 
-private: 
+	UFUNCTION(BlueprintCallable)
 	void InitAttributes();
+private: 
 
 };

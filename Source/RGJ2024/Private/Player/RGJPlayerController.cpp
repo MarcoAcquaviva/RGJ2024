@@ -58,6 +58,17 @@ void ARGJPlayerController::UpdateEndGame()
 			EndGameWidget->SetVisibility(ESlateVisibility::Visible);
 			FString gameStatus = GameState->DidPlayerWin() ? "You Won" : "You Lost";
 			EndGameWidget->TextBox_GameStatus->SetText(FText::FromString(gameStatus));
+			GameState->CalculateAttributeValue();
+			FShopAttributeInfo First = GameState->AttributesChosen[0];
+			FShopAttributeInfo Second = GameState->AttributesChosen[1];
+			FShopAttributeInfo Third = GameState->AttributesChosen[2];
+			EndGameWidget->TextBox_StateOne->SetText(FText::FromString(FString::SanitizeFloat(First.Value)));
+			EndGameWidget->TextBox_StateTwo->SetText(FText::FromString(FString::SanitizeFloat(Second.Value)));
+			EndGameWidget->TextBox_StateThree->SetText(FText::FromString(FString::SanitizeFloat(Third.Value)));
+			EndGameWidget->ImageOne = First.Image;
+			EndGameWidget->ImageTwo = Second.Image;
+			EndGameWidget->ImageThree = Third.Image;
+
 		}
 		UGameplayStatics::SetGamePaused(GetWorld(), !IsPaused);
 		if (GEngine)
@@ -115,6 +126,11 @@ void ARGJPlayerController::OnComplete_ClickAction()
 	ARGJ_ShoppingItem* ItemFound = Cast<ARGJ_ShoppingItem>(CursorHit.GetActor());
 	if(ItemFound && ItemFound->IsClickable)
 	ThisActorHit->Destroy();
+	ARGJGameStateBase* GameState = Cast<ARGJGameStateBase>(UGameplayStatics::GetGameState(GetWorld()));
+	if (GameState)
+	{
+		GameState->AllShopItemCollected.Add(ItemFound);
+	}
 	UpdateEndGame();
 	
 }

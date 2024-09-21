@@ -79,6 +79,8 @@ void ARGJGameStateBase::InitAttributes()
 			RandomIndex.Add(randomValue);
 			FShopAttributeInfo attChosen;
 			attChosen.Type = Attributes[randomValue].Type;
+			attChosen.Value = Attributes[randomValue].Value;
+			attChosen.Image = Attributes[randomValue].Image;
 			AttributesChosen.Add(attChosen);
 		}
 	}

@@ -4,4 +4,6 @@
 #include "HUD/Widget/EndGameWidget.h"
 #include "Components/TextBlock.h"
 #include "Components/SizeBox.h"
+#include "Game/RGJGameStateBase.h"
+#include "Components/Image.h"
 

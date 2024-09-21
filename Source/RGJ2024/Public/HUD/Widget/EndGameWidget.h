@@ -19,9 +19,27 @@ public:
 
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> TextBox_GameStatus;
+
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UTextBlock> TextBox_StateOne;
+
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UTextBlock> TextBox_StateTwo;
+
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UTextBlock> TextBox_StateThree;
 	
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<USizeBox> SizeBox_GameRate;
+
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<UObject>ImageOne;
+
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<UObject>ImageTwo;
+
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<UObject>ImageThree;
 
 	FORCEINLINE UTextBlock* GetTextGameStatus() const { return TextBox_GameStatus; }
 	FORCEINLINE USizeBox* GetSizeBox() const { return SizeBox_GameRate; }
