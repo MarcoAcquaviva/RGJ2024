@@ -38,6 +38,11 @@ void ARGJ_ShoppingItem::Destroyed()
 		UGameplayStatics::PlaySoundAtLocation(GetWorld(), OnDestorySound, GetActorLocation());
 	}
 
+	if (OnDestoryParticle)
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OnDestoryParticle, GetActorTransform());
+	}
+
 	Super::Destroyed();
 }
 
@@ -61,6 +66,22 @@ void ARGJ_ShoppingItem::HideWidget()
 void ARGJ_ShoppingItem::ShowWidget()
 {
 	PriceWidgetComponent->SetVisibility(true);
+}
+
+void ARGJ_ShoppingItem::PlaySpawnSound()
+{
+	if (OnSpawnSound)
+	{
+		UGameplayStatics::PlaySoundAtLocation(GetWorld(), OnSpawnSound, GetActorLocation());
+	}
+}
+
+void ARGJ_ShoppingItem::PlaySpawnEmitter()
+{
+	if (OnSpawnParticle)
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), OnSpawnParticle, GetActorTransform());
+	}
 }
 
 

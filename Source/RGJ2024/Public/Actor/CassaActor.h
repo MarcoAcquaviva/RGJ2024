@@ -8,6 +8,8 @@
 
 class UBoxComponent;
 class UWidgetComponent;
+class UAnimMontage;
+class USkeletalMeshComponent;
 
 UCLASS()
 class RGJ2024_API ACassaActor : public AActor
@@ -26,6 +28,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+
 protected:
 	UFUNCTION(BlueprintCallable)
 	void UpdatePriceWidget();
@@ -33,6 +36,7 @@ protected:
 private: 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UStaticMeshComponent> Mesh;
+	TObjectPtr<USkeletalMeshComponent> HandMesh;
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UBoxComponent> BoxCollision;
@@ -40,4 +44,7 @@ private:
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UWidgetComponent> PriceWidgetComponent;
 	float PriceSum;
+
+	TObjectPtr<UAnimMontage> OnGrabMontage;
+	void PlayGrabMontage();
 };
