@@ -8,6 +8,10 @@
 #include "EnhancedInputSubsystems.h"
 #include "Kismet/GameplayStatics.h"
 #include "Game/RGJGameStateBase.h"
+#include "HUD/RGJHUD.h"
+#include "HUD/Widget/RGJPauseWidget.h"
+#include "HUD/Widget/EndGameWidget.h"
+#include "Components/TextBlock.h"
 
 void ARGJPlayerController::PlayerTick(const float DeltaTime)
 {
@@ -41,6 +45,26 @@ void ARGJPlayerController::SetupInputComponent()
 	RGJInputComponent->BindAction(ExitAction, ETriggerEvent::Completed, this, &ARGJPlayerController::OnComplete_ExitGame);
 }
 
+void ARGJPlayerController::UpdateEndGame()
+{
+	ARGJGameStateBase* GameState = Cast<ARGJGameStateBase>(UGameplayStatics::GetGameState(GetWorld()));
+	if (GameState->CheckIfGameEnded())
+	{
+		IsPaused = UGameplayStatics::IsGamePaused(GetWorld());
+		ARGJHUD* HUD = Cast<ARGJHUD>(GetHUD());
+		UEndGameWidget* EndGameWidget = HUD->GetEndGameWidget();
+		if (EndGameWidget)
+		{
+			EndGameWidget->SetVisibility(ESlateVisibility::Visible);
+			FString gameStatus = GameState->DidPlayerWin() ? "You Won" : "You Lost";
+			EndGameWidget->TextBox_GameStatus->SetText(FText::FromString(gameStatus));
+		}
+		UGameplayStatics::SetGamePaused(GetWorld(), !IsPaused);
+		if (GEngine)
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("GAME IS OVER!"));
+	}
+}
+
 void ARGJPlayerController::CursorTrace()
 {
 	GetHitResultUnderCursor(ECC_Visibility, false, CursorHit);
@@ -67,6 +91,12 @@ void ARGJPlayerController::HitShoppingItem()
 void ARGJPlayerController::OnComplete_PauseGame()
 {
 	IsPaused = UGameplayStatics::IsGamePaused(GetWorld());
+	ARGJHUD* HUD =  Cast<ARGJHUD>(GetHUD());
+	URGJPauseWidget* PauseWidget = HUD->GetPauseWidget();
+	if (PauseWidget)
+	{
+		PauseWidget->SetVisibility(ESlateVisibility::Visible);
+	}
 	UGameplayStatics::SetGamePaused(GetWorld(), !IsPaused);
 }
 
@@ -85,12 +115,8 @@ void ARGJPlayerController::OnComplete_ClickAction()
 	ARGJ_ShoppingItem* ItemFound = Cast<ARGJ_ShoppingItem>(CursorHit.GetActor());
 	if(ItemFound && ItemFound->IsClickable)
 	ThisActorHit->Destroy();
-
-	ARGJGameStateBase* GameState = Cast<ARGJGameStateBase>(UGameplayStatics::GetGameState(GetWorld()));
-
-	if (GameState->CheckIfGameEnded())
-	{
-		if (GEngine)
-			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("GAME IS OVER!"));
-	}
+	UpdateEndGame();
+	
 }
+
+

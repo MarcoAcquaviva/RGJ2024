@@ -10,6 +10,8 @@
 #include "HUD/Widget/RGJPriceWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "Game/RGJGameStateBase.h"
+#include "HUD/RGJHUD.h"
+#include "Player/RGJPlayerController.h"
 
 // Sets default values
 ACassaActor::ACassaActor()
@@ -68,10 +70,10 @@ void ACassaActor::Tick(float DeltaTime)
 				PlayGrabMontage();
 				ShoppingItem->Destroyed();
 
-				if (GameState->CheckIfGameEnded())
+				ARGJPlayerController* PlayerController = Cast<ARGJPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+				if (PlayerController)
 				{
-					if (GEngine)
-						GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("GAME IS OVER!"));
+					PlayerController->UpdateEndGame();
 				}
 			}
 		}

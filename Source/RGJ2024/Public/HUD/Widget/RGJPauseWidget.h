@@ -3,15 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/GameModeBase.h"
-#include "RGJGameModeBase.generated.h"
+#include "Blueprint/UserWidget.h"
+#include "RGJPauseWidget.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class RGJ2024_API ARGJGameModeBase : public AGameModeBase
+class RGJ2024_API URGJPauseWidget : public UUserWidget
 {
 	GENERATED_BODY()
-
+	
 };

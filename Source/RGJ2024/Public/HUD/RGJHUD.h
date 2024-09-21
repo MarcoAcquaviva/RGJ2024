@@ -8,6 +8,8 @@
 
 class URGJUserWidget;
 class URGJTutorialUserWidget;
+class URGJPauseWidget;
+class UEndGameWidget;
 
 /**
  * 
@@ -23,6 +25,10 @@ public :
 	TSubclassOf<UUserWidget> PlayerWidgetClass;
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UUserWidget> TutorialWidgetClass;
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UUserWidget> PauseWidgetClass;
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UUserWidget> EndWidgetClass;
 protected: 
 	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<URGJUserWidget> PlayerWidget;
@@ -30,6 +36,17 @@ protected:
 	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<URGJTutorialUserWidget> TutorialWidget;
 
-	UFUNCTION(BlueprintCallable)
+	UPROPERTY(BlueprintReadWrite)
+	TObjectPtr<URGJPauseWidget> PauseWidget;
+
+	UPROPERTY(BlueprintReadWrite)
+	TObjectPtr<UEndGameWidget> EndWidget;
+
+	UFUNCTION(BlueprintCallable) 
 	virtual void InitOverlay();
+
+public:
+
+	URGJPauseWidget* GetPauseWidget()const { return PauseWidget; }
+	UEndGameWidget* GetEndGameWidget()const { return EndWidget; }
 };

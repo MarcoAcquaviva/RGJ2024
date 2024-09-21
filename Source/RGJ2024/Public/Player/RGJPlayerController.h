@@ -23,6 +23,8 @@ protected:
 	void BeginPlay() override;
 	void SetupInputComponent() override;
 
+public:
+	void UpdateEndGame();
 private: 
 	FHitResult CursorHit;
 	void CursorTrace();

@@ -31,8 +31,10 @@ public:
 	float CurretMoneyValue = 0.f;
 
 	bool CheckIfGameEnded();
+	bool DidPlayerWin();
 
 	UFUNCTION(BlueprintCallable)
 	float GetTotalAmout();
+
 
 };

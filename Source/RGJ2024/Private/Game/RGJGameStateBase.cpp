@@ -3,6 +3,8 @@
 
 #include "Game/RGJGameStateBase.h"
 #include "RGJ_ShoppingItem.h"
+#include "Kismet/GameplayStatics.h"
+#include "Game/RGJGameModeBase.h"
 
 
 
@@ -26,6 +28,14 @@ bool ARGJGameStateBase::CheckIfGameEnded()
 	return false;
 }
 
+bool ARGJGameStateBase::DidPlayerWin()
+{
+	if (CurretMoneyValue >= MaxMoneyUsable)
+		return false;
+
+	return true;
+}
+
 float ARGJGameStateBase::GetTotalAmout()
 {
 	float amout = 0.f;
@@ -36,3 +46,4 @@ float ARGJGameStateBase::GetTotalAmout()
 	}
 	return amout;
 }
+
