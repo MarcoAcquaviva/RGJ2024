@@ -16,12 +16,12 @@ class RGJ2024_API ARGJHUD : public AHUD
 {
 	GENERATED_BODY()
 	
-protected :
+public :
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UUserWidget> PlayerWidgetClass;
-
-	UPROPERTY()
+protected: 
+	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<URGJUserWidget> PlayerWidget;
 
 	UFUNCTION(BlueprintCallable)

@@ -4,44 +4,40 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "RulloActor.generated.h"
+#include "CassaActor.generated.h"
 
-class ARGJ_ShoppingItem;
 class UBoxComponent;
+class UWidgetComponent;
 
 UCLASS()
-class RGJ2024_API ARulloActor : public AActor
+class RGJ2024_API ACassaActor : public AActor
 {
 	GENERATED_BODY()
-
-public:
+	
+public:	
 	// Sets default values for this actor's properties
-	ARulloActor();
+	ACassaActor();
 
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:
-	virtual void Tick(float DeltaSeconds) override;
+public:	
+	// Called every frame
+	virtual void Tick(float DeltaTime) override;
 
+protected:
+	UFUNCTION(BlueprintCallable)
+	void UpdatePriceWidget();
 
-private:
+private: 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UStaticMeshComponent> Mesh;
 
-protected:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere)
 	TObjectPtr<UBoxComponent> BoxCollision;
 
-	UFUNCTION()
-	void InitRandomObject();
-
 	UPROPERTY(EditAnywhere)
-	TArray<TSubclassOf<ARGJ_ShoppingItem>> ObjectsToSpawn;
-	FTimerHandle SpawnItemHandler;
-
-	void SpawnShopItem();
-	FTransform GetSpawnTransform();
-	bool AreItemSpawned = false;
+	TObjectPtr<UWidgetComponent> PriceWidgetComponent;
+	float PriceSum;
 };

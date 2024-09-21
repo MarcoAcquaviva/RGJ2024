@@ -27,6 +27,10 @@ public:
 	void HideWidget();
 	void ShowWidget();
 
+	bool IsClickable = true;
+	bool PriceAdded = false;
+	bool IsDestroyed = false;
+
 private:
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UStaticMeshComponent> Mesh;
@@ -39,4 +43,6 @@ private:
 	UPROPERTY(EditAnywhere, Category="OnDestroy")
 	TObjectPtr<USoundCue> OnDestorySound;
 
+public:
+	FORCEINLINE float GetPrice() const { return Price; }
 };

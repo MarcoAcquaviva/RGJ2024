@@ -6,6 +6,8 @@
 #include "RGJ_ShoppingItem.h"
 #include "Input/RGJEnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
+#include "Kismet/GameplayStatics.h"
+#include "Game/RGJGameStateBase.h"
 
 void ARGJPlayerController::PlayerTick(const float DeltaTime)
 {
@@ -20,7 +22,7 @@ void ARGJPlayerController::BeginPlay()
 	Super::BeginPlay();
 
 	bShowMouseCursor = true;
-	DefaultMouseCursor = EMouseCursor::Hand;
+	DefaultMouseCursor = EMouseCursor::Default;
 
 	FInputModeGameAndUI InputModeData;
 	InputModeData.SetLockMouseToViewportBehavior(EMouseLockMode::DoNotLock);
@@ -66,4 +68,16 @@ void ARGJPlayerController::OnComplete_ClickAction()
 
 	if (GEngine)
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Clicked!"));
+
+	ARGJ_ShoppingItem* ItemFound = Cast<ARGJ_ShoppingItem>(CursorHit.GetActor());
+	if(ItemFound && ItemFound->IsClickable)
+	ThisActorHit->Destroy();
+
+	ARGJGameStateBase* GameState = Cast<ARGJGameStateBase>(UGameplayStatics::GetGameState(GetWorld()));
+
+	if (GameState->CheckIfGameEnded())
+	{
+		if (GEngine)
+			GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("GAME IS OVER!"));
+	}
 }

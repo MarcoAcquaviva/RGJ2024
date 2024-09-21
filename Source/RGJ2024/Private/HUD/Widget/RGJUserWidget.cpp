@@ -3,3 +3,7 @@
 
 #include "HUD/Widget/RGJUserWidget.h"
 
+void URGJUserWidget::NativeConstruct()
+{
+	Super::NativeConstruct();
+}
