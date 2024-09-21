@@ -27,8 +27,8 @@ private:
 	FHitResult CursorHit;
 	void CursorTrace();
 	void HitShoppingItem();
-	void PauseGame();
-	void ExitGame();
+	void OnComplete_PauseGame();
+	void OnComplete_ExitGame();
 
 	TObjectPtr<ARGJ_ShoppingItem> LastActorHit;
 	TObjectPtr<ARGJ_ShoppingItem> ThisActorHit;

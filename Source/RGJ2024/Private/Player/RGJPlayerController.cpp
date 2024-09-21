@@ -37,6 +37,8 @@ void ARGJPlayerController::SetupInputComponent()
 	check(ClickAction);
 
 	RGJInputComponent->BindAction(ClickAction, ETriggerEvent::Completed, this, &ARGJPlayerController::OnComplete_ClickAction);
+	RGJInputComponent->BindAction(PauseAction, ETriggerEvent::Completed, this, &ARGJPlayerController::OnComplete_PauseGame);
+	RGJInputComponent->BindAction(ExitAction, ETriggerEvent::Completed, this, &ARGJPlayerController::OnComplete_ExitGame);
 }
 
 void ARGJPlayerController::CursorTrace()
@@ -62,14 +64,15 @@ void ARGJPlayerController::HitShoppingItem()
 
 }
 
-void ARGJPlayerController::PauseGame()
+void ARGJPlayerController::OnComplete_PauseGame()
 {
 	IsPaused = UGameplayStatics::IsGamePaused(GetWorld());
 	UGameplayStatics::SetGamePaused(GetWorld(), !IsPaused);
 }
 
-void ARGJPlayerController::ExitGame()
+void ARGJPlayerController::OnComplete_ExitGame()
 {
+	ConsoleCommand("Quit");
 }
 
 void ARGJPlayerController::OnComplete_ClickAction()
