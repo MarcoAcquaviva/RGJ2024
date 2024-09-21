@@ -62,6 +62,16 @@ void ARGJPlayerController::HitShoppingItem()
 
 }
 
+void ARGJPlayerController::PauseGame()
+{
+	IsPaused = UGameplayStatics::IsGamePaused(GetWorld());
+	UGameplayStatics::SetGamePaused(GetWorld(), !IsPaused);
+}
+
+void ARGJPlayerController::ExitGame()
+{
+}
+
 void ARGJPlayerController::OnComplete_ClickAction()
 {
 	if (!CursorHit.bBlockingHit) return;

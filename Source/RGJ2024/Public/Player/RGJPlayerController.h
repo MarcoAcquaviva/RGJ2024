@@ -27,6 +27,8 @@ private:
 	FHitResult CursorHit;
 	void CursorTrace();
 	void HitShoppingItem();
+	void PauseGame();
+	void ExitGame();
 
 	TObjectPtr<ARGJ_ShoppingItem> LastActorHit;
 	TObjectPtr<ARGJ_ShoppingItem> ThisActorHit;
@@ -34,5 +36,13 @@ private:
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputAction> ClickAction;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> PauseAction;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TObjectPtr<UInputAction> ExitAction;
+
 	void OnComplete_ClickAction();
+
+	bool IsPaused = false;
 };
