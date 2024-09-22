@@ -33,8 +33,8 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void GetPreviousPage();
 
+	void UpdatePage();
 private:
 	int32 CurrentPage = 0;
 
-	void UpdatePage();
 };

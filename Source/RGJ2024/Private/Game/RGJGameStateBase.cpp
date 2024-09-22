@@ -52,8 +52,10 @@ void ARGJGameStateBase::CalculateAttributeValue()
 {
 	for (auto& Item : AllShopItemCollected)
 	{
+		if (Item == nullptr)
+			continue;
 		for (auto& attchChosen : AttributesChosen)
-		{
+		{			
 			TArray<FShopAttributeInfo> shopsInfo = Item->GetAttributes();
 			for (auto& shop : shopsInfo)
 			{

@@ -7,6 +7,7 @@
 #include "RGJUserWidget.generated.h"
 
 class URGJTutorialUserWidget;
+class ARGJGameStateBase;
 /**
  * 
  */
@@ -16,5 +17,14 @@ class RGJ2024_API URGJUserWidget : public UUserWidget
 	GENERATED_BODY()
 
 	virtual void NativeConstruct() override;
+
+	UFUNCTION(BlueprintCallable)
+	float GetPercent(int index);
+
+	UFUNCTION(BlueprintCallable)
+	UObject* GetImage(int index);
+
+protected:
+	TObjectPtr<ARGJGameStateBase> RGJGameState;
 	
 };
