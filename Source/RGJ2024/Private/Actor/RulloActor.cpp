@@ -6,6 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "RGJ_ShoppingItem.h"
 #include "Components/BoxComponent.h"
+#include "Components/ArrowComponent.h"
 #include "Game/RGJGameStateBase.h"
 #include "TimeManagementClasses.h"
 
@@ -23,6 +24,7 @@ ARulloActor::ARulloActor()
 
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
 
+	SpawnPointArrow = CreateDefaultSubobject< UArrowComponent>(TEXT("SpawnPoint"));
 }
 
 // Called when the game starts or when spawned
@@ -88,7 +90,8 @@ void ARulloActor::SpawnShopItem()
 
 FTransform ARulloActor::GetSpawnTransform()
 {
-	FVector SpawnPoint = Mesh->GetSocketLocation("SpawnPoint");
+	//FVector SpawnPoint = Mesh->GetSocketLocation("SpawnPoint");
+	FVector SpawnPoint = SpawnPointArrow->GetComponentLocation();
 	FRotator SpawnRotation(0, 0, 0);
 	FTransform SpawnTransform;
 	SpawnTransform.SetLocation(SpawnPoint);

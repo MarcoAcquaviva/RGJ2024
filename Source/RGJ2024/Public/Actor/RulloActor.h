@@ -8,6 +8,7 @@
 
 class ARGJ_ShoppingItem;
 class UBoxComponent;
+class UArrowComponent;
 
 UCLASS()
 class RGJ2024_API ARulloActor : public AActor
@@ -33,6 +34,8 @@ protected:
 	TObjectPtr<UStaticMeshComponent> Mesh;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<UBoxComponent> BoxCollision;
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UArrowComponent> SpawnPointArrow;
 
 	UFUNCTION()
 	void InitRandomObject();
