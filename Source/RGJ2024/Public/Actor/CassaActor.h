@@ -36,6 +36,7 @@ protected:
 private: 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UStaticMeshComponent> Mesh;
+	UPROPERTY(EditAnywhere)
 	TObjectPtr<USkeletalMeshComponent> HandMesh;
 
 	UPROPERTY(EditAnywhere)
@@ -45,6 +46,7 @@ private:
 	TObjectPtr<UWidgetComponent> PriceWidgetComponent;
 	float PriceSum;
 
+	UPROPERTY(EditAnywhere)
 	TObjectPtr<UAnimMontage> OnGrabMontage;
 	void PlayGrabMontage();
 };

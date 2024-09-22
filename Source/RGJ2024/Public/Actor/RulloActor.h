@@ -27,10 +27,10 @@ public:
 
 
 private:
-	UPROPERTY(EditAnywhere)
-	TObjectPtr<UStaticMeshComponent> Mesh;
 
 protected:
+	UPROPERTY(EditAnywhere, BluePrintReadOnly)
+	TObjectPtr<UStaticMeshComponent> Mesh;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<UBoxComponent> BoxCollision;
 

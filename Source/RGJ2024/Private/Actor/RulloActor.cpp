@@ -20,6 +20,8 @@ ARulloActor::ARulloActor()
 	Mesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
 	Mesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	SetRootComponent(Mesh);
+	UMaterialInterface* material = Mesh->GetMaterial(0);
+	
 
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
 

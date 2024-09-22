@@ -27,6 +27,7 @@ ACassaActor::ACassaActor()
 	HandMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Hand"));
 	HandMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
 	HandMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	HandMesh->AttachToComponent(Mesh, FAttachmentTransformRules::KeepWorldTransform);
 
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
 	BoxCollision->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
@@ -101,7 +102,7 @@ void ACassaActor::PlayGrabMontage()
 	UAnimInstance* AnimInstance = HandMesh->GetAnimInstance();
 	if (AnimInstance)
 	{
-		if (OnGrabMontage)
+		if (OnGrabMontage && OnGrabMontage->IsValidToPlay())
 		{
 			AnimInstance->Montage_Play(OnGrabMontage);
 		}
