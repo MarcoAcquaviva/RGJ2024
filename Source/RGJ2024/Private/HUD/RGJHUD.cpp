@@ -18,8 +18,9 @@ void ARGJHUD::InitOverlay()
 
 	UUserWidget* TutorialUserWidget = CreateWidget<UUserWidget>(GetWorld(), TutorialWidgetClass);
 	TutorialUserWidget->AddToViewport();
-	TutorialUserWidget->SetVisibility(ESlateVisibility::Hidden);
+	TutorialUserWidget->SetVisibility(ESlateVisibility::Visible);
 	TutorialWidget = Cast<URGJTutorialUserWidget>(TutorialUserWidget);
+	TutorialWidget->UpdatePage();
 	
 	UUserWidget* PauseUserWidget = CreateWidget<UUserWidget>(GetWorld(), PauseWidgetClass);
 	PauseUserWidget->AddToViewport();
@@ -33,7 +34,7 @@ void ARGJHUD::InitOverlay()
 
 	UUserWidget* InitialGameUserWidget = CreateWidget<UUserWidget>(GetWorld(), InitialPageWidgetClass);
 	InitialGameUserWidget->AddToViewport();
-	InitialGameUserWidget->SetVisibility(ESlateVisibility::Visible);
+	InitialGameUserWidget->SetVisibility(ESlateVisibility::Hidden);
 	InitialPageWidget = Cast<UInitialPageUserWidget>(InitialGameUserWidget);
 
 	UGameplayStatics::SetGamePaused(GetWorld(), true);

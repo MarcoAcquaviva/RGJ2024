@@ -6,6 +6,8 @@
 #include "GameFramework/Pawn.h"
 #include "RGJPawn.generated.h"
 
+class USkeletalMeshComponent;
+
 UCLASS()
 class RGJ2024_API ARGJPawn : public APawn
 {
@@ -23,5 +25,14 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+protected: 
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<USkeletalMeshComponent> SkeletonMesh;
 
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UAnimMontage> OnGrabMontage;
+
+public:
+	void PlayMontage();
+	void SetHandPosition(FVector NewVector);
 };

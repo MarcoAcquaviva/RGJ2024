@@ -12,6 +12,7 @@
 #include "HUD/Widget/RGJPauseWidget.h"
 #include "HUD/Widget/EndGameWidget.h"
 #include "Components/TextBlock.h"
+#include "Pawn/RGJPawn.h"
 
 void ARGJPlayerController::PlayerTick(const float DeltaTime)
 {
@@ -123,6 +124,11 @@ void ARGJPlayerController::OnComplete_ClickAction()
 	if (GEngine)
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Clicked!"));
 
+	ARGJPawn* MyPawn = Cast<ARGJPawn>(GetPawn());
+	if (MyPawn)
+	{
+		MyPawn->PlayMontage();
+	}
 	ARGJ_ShoppingItem* ItemFound = Cast<ARGJ_ShoppingItem>(CursorHit.GetActor());
 	if(ItemFound && ItemFound->IsClickable)
 	ThisActorHit->Destroy();
