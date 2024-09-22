@@ -5,5 +5,4 @@
 #include "Kismet/GameplayStatics.h"
 #include "Game/RGJGameStateBase.h"
 
-#include "RulloActor.generated.h"
 

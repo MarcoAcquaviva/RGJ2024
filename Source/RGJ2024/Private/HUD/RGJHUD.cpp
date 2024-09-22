@@ -6,16 +6,19 @@
 #include "HUD/Widget/RGJTutorialUserWidget.h"
 #include "HUD/Widget/RGJPauseWidget.h"
 #include "HUD/Widget/EndGameWidget.h"
+#include "HUD/Widget/InitialPageUserWidget.h"
 #include "Kismet/GameplayStatics.h"
 
 void ARGJHUD::InitOverlay()
 {
 	UUserWidget* NewWidget = CreateWidget<UUserWidget>(GetWorld(), PlayerWidgetClass);
 	NewWidget->AddToViewport();
+	NewWidget->SetVisibility(ESlateVisibility::Hidden);
 	PlayerWidget = Cast<URGJUserWidget>(NewWidget);
 
 	UUserWidget* TutorialUserWidget = CreateWidget<UUserWidget>(GetWorld(), TutorialWidgetClass);
 	TutorialUserWidget->AddToViewport();
+	TutorialUserWidget->SetVisibility(ESlateVisibility::Hidden);
 	TutorialWidget = Cast<URGJTutorialUserWidget>(TutorialUserWidget);
 	
 	UUserWidget* PauseUserWidget = CreateWidget<UUserWidget>(GetWorld(), PauseWidgetClass);
@@ -27,6 +30,11 @@ void ARGJHUD::InitOverlay()
 	EndGameUserWidget->AddToViewport();
 	EndGameUserWidget->SetVisibility(ESlateVisibility::Hidden);
 	EndWidget = Cast<UEndGameWidget>(EndGameUserWidget);
+
+	UUserWidget* InitialGameUserWidget = CreateWidget<UUserWidget>(GetWorld(), InitialPageWidgetClass);
+	InitialGameUserWidget->AddToViewport();
+	InitialGameUserWidget->SetVisibility(ESlateVisibility::Visible);
+	InitialPageWidget = Cast<UInitialPageUserWidget>(InitialGameUserWidget);
 
 	UGameplayStatics::SetGamePaused(GetWorld(), true);
 }
