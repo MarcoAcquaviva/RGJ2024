@@ -49,24 +49,24 @@ public:
 	TArray<ARGJ_ShoppingItem*> AllShopItems;
 	UPROPERTY(BlueprintReadWrite)
 	TArray<ARGJ_ShoppingItem*> AllShopItemCollected;
-	UPROPERTY(VisibleAnywhere, Category = "Spawn")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawn")
 	int SpawnCounter = 0;
-	UPROPERTY(EditAnywhere, Category = "Spawn")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawn")
 	int NumberOfItemToSpawn = 10;
-	UPROPERTY(EditAnywhere, Category = "Money")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Money")
 	float MaxMoneyUsable = 20.5f;
-	UPROPERTY(EditAnywhere, Category = "Money")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Money")
 	float MoneyOfAllItems = 0.f;
-	UPROPERTY(VisibleAnywhere, Category = "Money")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly ,Category = "Money")
 	float CurretMoneyValue = 0.f;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly )
 	TArray<FShopAttributeInfo> Attributes;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TArray<FShopAttributeInfo> AttributesChosen;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 MaxAttributePerGame = 3;
 
 	bool CheckIfGameEnded();
