@@ -22,13 +22,13 @@ struct FShopAttributeInfo
 {
 	GENERATED_BODY()
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	E_ShopAttribute Type = E_ShopAttribute::Batteria;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	float Value = 0;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<UObject> Image;
 };
 
@@ -37,7 +37,7 @@ class ARGJ_ShoppingItem;
 /**
  * 
  */
-UCLASS(BlueprintType)
+UCLASS()
 class RGJ2024_API ARGJGameStateBase : public AGameStateBase
 {
 	GENERATED_BODY()
