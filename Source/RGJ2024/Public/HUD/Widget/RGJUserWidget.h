@@ -8,6 +8,7 @@
 
 class URGJTutorialUserWidget;
 class ARGJGameStateBase;
+class UButton;
 /**
  * 
  */
@@ -16,15 +17,27 @@ class RGJ2024_API URGJUserWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
-	virtual void NativeConstruct() override;
-
 	UFUNCTION(BlueprintCallable)
 	float GetPercent(int index);
 
 	UFUNCTION(BlueprintCallable)
 	UObject* GetImage(int index);
 
+	UFUNCTION(BlueprintCallable)
+	void InitBars();
+
+	UFUNCTION(BlueprintCallable)
+	void UpdatePercentages();
+
+	UFUNCTION(BlueprintCallable)
+	void UpdatePercentages();
+
 protected:
 	TObjectPtr<ARGJGameStateBase> RGJGameState;
-	
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UButton> BarraLeft;
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UButton> BarraMiddle;
+	UPROPERTY(meta = (BindWidget))
+	TObjectPtr<UButton> BarraRight;
 };

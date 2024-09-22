@@ -4,6 +4,8 @@
 #include "HUD/Widget/RGJTutorialUserWidget.h"
 #include "Components/TextBlock.h"
 #include "Kismet/GameplayStatics.h"
+#include "HUD/RGJHUD.h"
+#include "HUD/Widget/RGJUserWidget.h"
 
 void URGJTutorialUserWidget::GetNextPage()
 {
@@ -13,6 +15,11 @@ void URGJTutorialUserWidget::GetNextPage()
 		CurrentPage = Infos.Num();
 		RemoveFromParent();
 		UGameplayStatics::SetGamePaused(GetWorld(), false);
+		const APlayerController* PlayerController = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+		AHUD* HUD = PlayerController->GetHUD();
+		ARGJHUD* RGJHUD = Cast<ARGJHUD>(HUD);
+		URGJUserWidget* UserWidget = RGJHUD->GetUserWidget();
+		UserWidget->SetVisibility(ESlateVisibility::Visible);
 		return;
 	}
 	UpdatePage();

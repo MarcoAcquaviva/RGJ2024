@@ -64,7 +64,7 @@ public:
 	TArray<FShopAttributeInfo> Attributes;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	TArray<FShopAttributeInfo> AttributesChosen;
+	TMap<E_ShopAttribute, FShopAttributeInfo> AttributesChosen;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 MaxAttributePerGame = 3;
@@ -80,6 +80,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void InitAttributes();
+
+	void UpdateInStatistics();
 private: 
 
 };

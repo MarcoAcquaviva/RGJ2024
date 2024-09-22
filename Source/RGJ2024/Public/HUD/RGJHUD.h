@@ -57,4 +57,5 @@ public:
 	UEndGameWidget* GetEndGameWidget()const { return EndWidget; }
 	UFUNCTION(BlueprintCallable)
 	URGJTutorialUserWidget* GetTutorialWidget()const { return TutorialWidget; }
+	URGJUserWidget* GetUserWidget()const { return PlayerWidget; }
 };

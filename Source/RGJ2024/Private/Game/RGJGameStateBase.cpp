@@ -19,7 +19,7 @@ bool ARGJGameStateBase::CheckIfGameEnded()
 	{
 		for (auto Item : AllShopItems)
 		{
-if(Item == nullptr) continue;
+			if (Item == nullptr) continue;
 			if (!Item->IsDestroyed)
 				return false;
 		}
@@ -55,17 +55,16 @@ void ARGJGameStateBase::CalculateAttributeValue()
 	{
 		if (Item == nullptr)
 			continue;
-		for (auto& attchChosen : AttributesChosen)
-		{			
+
 			TArray<FShopAttributeInfo> shopsInfo = Item->GetAttributes();
 			for (auto& shop : shopsInfo)
 			{
-				if (attchChosen.Type == shop.Type)
+				if (AttributesChosen.Contains(shop.Type))
 				{
-					attchChosen.Value += shop.Value;
+					AttributesChosen[shop.Type].Value += shop.Value;
 				}
 			}
-		}
+		
 	}
 }
 
@@ -84,9 +83,14 @@ void ARGJGameStateBase::InitAttributes()
 			attChosen.Type = Attributes[randomValue].Type;
 			attChosen.Value = Attributes[randomValue].Value;
 			attChosen.Image = Attributes[randomValue].Image;
-			AttributesChosen.Add(attChosen);
+			AttributesChosen.Add(Attributes[randomValue].Type ,attChosen);
 		}
 	}
 
+}
+
+void ARGJGameStateBase::UpdateInStatistics()
+{
+	CalculateAttributeValue();
 }
 
