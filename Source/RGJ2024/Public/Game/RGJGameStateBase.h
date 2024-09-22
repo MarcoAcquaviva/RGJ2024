@@ -37,7 +37,7 @@ class ARGJ_ShoppingItem;
 /**
  * 
  */
-UCLASS()
+UCLASS(BlueprintType)
 class RGJ2024_API ARGJGameStateBase : public AGameStateBase
 {
 	GENERATED_BODY()
