@@ -36,6 +36,7 @@ void ARGJPawn::PlayMontage()
 	 UAnimInstance* AnimInstance =  SkeletonMesh->GetAnimInstance();
 	if (OnGrabMontage && AnimInstance)
 	{
+		if(OnGrabMontage->IsValidToPlay())
 		AnimInstance->Montage_Play(OnGrabMontage);
 	}
 }

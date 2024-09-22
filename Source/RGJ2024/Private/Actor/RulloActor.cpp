@@ -22,8 +22,10 @@ ARulloActor::ARulloActor()
 	Mesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
+	BoxCollision->AttachToComponent(Mesh, FAttachmentTransformRules::KeepWorldTransform);
 
 	SpawnPointArrow = CreateDefaultSubobject< UArrowComponent>(TEXT("SpawnPoint"));
+	SpawnPointArrow->AttachToComponent(BoxCollision, FAttachmentTransformRules::KeepWorldTransform);
 }
 
 // Called when the game starts or when spawned
