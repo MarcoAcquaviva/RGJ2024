@@ -2,11 +2,12 @@
 
 
 #include "Actor/CassaActor.h"
-#include "Components/BoxComponent.h"
 #include "RGJ_ShoppingItem.h"
+#include "Components/BoxComponent.h"
 #include "Components/WidgetComponent.h"
-#include "HUD/Widget/RGJPriceWidget.h"
 #include "Components/TextBlock.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "HUD/Widget/RGJPriceWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "Game/RGJGameStateBase.h"
 
@@ -20,6 +21,10 @@ ACassaActor::ACassaActor()
 	Mesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
 	Mesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Overlap);
 	Mesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+
+	HandMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Hand"));
+	HandMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
+	HandMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
 	BoxCollision->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
@@ -60,7 +65,7 @@ void ACassaActor::Tick(float DeltaTime)
 				PriceSum = GameState->CurretMoneyValue;
 				UpdatePriceWidget();
 				ShoppingItem->PriceAdded = true;
-				//TODO: Aggiungere montage con evento a cui legarsi per ditruggere l'oggetto
+				PlayGrabMontage();
 				ShoppingItem->Destroyed();
 
 				if (GameState->CheckIfGameEnded())
@@ -85,6 +90,18 @@ void ACassaActor::UpdatePriceWidget()
 			{
 				TextBlock->SetText(FText::FromString(FString::SanitizeFloat(PriceSum)));
 			}
+		}
+	}
+}
+
+void ACassaActor::PlayGrabMontage()
+{
+	UAnimInstance* AnimInstance = HandMesh->GetAnimInstance();
+	if (AnimInstance)
+	{
+		if (OnGrabMontage)
+		{
+			AnimInstance->Montage_Play(OnGrabMontage);
 		}
 	}
 }

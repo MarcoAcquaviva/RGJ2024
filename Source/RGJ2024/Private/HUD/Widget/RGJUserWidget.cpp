@@ -7,3 +7,5 @@ void URGJUserWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
 }
+
+

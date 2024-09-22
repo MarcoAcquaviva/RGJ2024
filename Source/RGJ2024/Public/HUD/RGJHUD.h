@@ -7,6 +7,7 @@
 #include "RGJHUD.generated.h"
 
 class URGJUserWidget;
+class URGJTutorialUserWidget;
 
 /**
  * 
@@ -20,9 +21,14 @@ public :
 
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UUserWidget> PlayerWidgetClass;
+	UPROPERTY(EditAnywhere)
+	TSubclassOf<UUserWidget> TutorialWidgetClass;
 protected: 
 	UPROPERTY(BlueprintReadWrite)
 	TObjectPtr<URGJUserWidget> PlayerWidget;
+
+	UPROPERTY(BlueprintReadWrite)
+	TObjectPtr<URGJTutorialUserWidget> TutorialWidget;
 
 	UFUNCTION(BlueprintCallable)
 	virtual void InitOverlay();

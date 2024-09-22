@@ -3,10 +3,18 @@
 
 #include "HUD/RGJHUD.h"
 #include "HUD/Widget/RGJUserWidget.h"
+#include "HUD/Widget/RGJTutorialUserWidget.h"
+#include "Kismet/GameplayStatics.h"
 
 void ARGJHUD::InitOverlay()
 {
-	UUserWidget* Widget = CreateWidget<UUserWidget>(GetWorld(), PlayerWidgetClass);
-	Widget->AddToViewport();
-	PlayerWidget = Cast<URGJUserWidget>(Widget);
+	UUserWidget* NewWidget = CreateWidget<UUserWidget>(GetWorld(), PlayerWidgetClass);
+	NewWidget->AddToViewport();
+	PlayerWidget = Cast<URGJUserWidget>(NewWidget);
+
+	UUserWidget* TutorialUserWidget = CreateWidget<UUserWidget>(GetWorld(), TutorialWidgetClass);
+	TutorialUserWidget->AddToViewport();
+	TutorialWidget = Cast<URGJTutorialUserWidget>(TutorialUserWidget);
+
+	UGameplayStatics::SetGamePaused(GetWorld(), true);
 }

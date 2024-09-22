@@ -6,6 +6,7 @@
 #include "Blueprint/UserWidget.h"
 #include "RGJUserWidget.generated.h"
 
+class URGJTutorialUserWidget;
 /**
  * 
  */

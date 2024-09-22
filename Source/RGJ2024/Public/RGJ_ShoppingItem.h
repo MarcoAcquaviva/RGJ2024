@@ -9,6 +9,7 @@
 class UWidgetComponent;
 class UProjectileMovementComponent;
 class USoundCue;
+class UParticleSystem;
 
 UCLASS()
 class RGJ2024_API ARGJ_ShoppingItem : public AActor
@@ -26,6 +27,8 @@ public:
 
 	void HideWidget();
 	void ShowWidget();
+	void PlaySpawnSound();
+	void PlaySpawnEmitter();
 
 	bool IsClickable = true;
 	bool PriceAdded = false;
@@ -42,6 +45,13 @@ private:
 
 	UPROPERTY(EditAnywhere, Category="OnDestroy")
 	TObjectPtr<USoundCue> OnDestorySound;
+	UPROPERTY(EditAnywhere, Category="OnDestroy")
+	TObjectPtr<UParticleSystem> OnDestoryParticle;
+
+	UPROPERTY(EditAnywhere, Category="OnSpawn")
+	TObjectPtr<USoundCue> OnSpawnSound;
+	UPROPERTY(EditAnywhere, Category="OnSpawn")
+	TObjectPtr<UParticleSystem> OnSpawnParticle;
 
 public:
 	FORCEINLINE float GetPrice() const { return Price; }
