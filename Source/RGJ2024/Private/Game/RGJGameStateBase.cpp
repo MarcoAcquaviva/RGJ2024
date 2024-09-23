@@ -19,6 +19,7 @@ bool ARGJGameStateBase::CheckIfGameEnded()
 	{
 		for (auto Item : AllShopItems)
 		{
+if(Item == nullptr) continue;
 			if (!Item->IsDestroyed)
 				return false;
 		}
