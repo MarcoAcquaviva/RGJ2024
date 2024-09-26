@@ -7,6 +7,8 @@
 #include "RGJPawn.generated.h"
 
 class USkeletalMeshComponent;
+class USpringArmComponent;
+class UCameraComponent;
 
 UCLASS()
 class RGJ2024_API ARGJPawn : public APawn
@@ -28,6 +30,10 @@ public:
 protected: 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<USkeletalMeshComponent> SkeletonMesh;
+	//UPROPERTY(EditAnywhere)
+	//TObjectPtr<USpringArmComponent> SpringArm;
+	//UPROPERTY(EditAnywhere)
+	//TObjectPtr<UCameraComponent> Camera;
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UAnimMontage> OnGrabMontage;

@@ -17,16 +17,17 @@ ACarrelloActor::ACarrelloActor()
 	LayerUno = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LayerUno"));
 	LayerUno->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
 	LayerUno->SetSimulatePhysics(false);
+	LayerUno->bHiddenInGame = true;
+
 	LayerDue = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LayerDue"));
 	LayerDue->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
 	LayerDue->SetSimulatePhysics(false);
 	LayerDue->bHiddenInGame = true;
-	LayerDue->AttachToComponent(LayerUno, FAttachmentTransformRules::KeepWorldTransform);
+
 	LayerTre = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("LayerTre"));
 	LayerTre->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
 	LayerTre->SetSimulatePhysics(false);
 	LayerTre->bHiddenInGame = true;
-	LayerTre->AttachToComponent(LayerUno,FAttachmentTransformRules::KeepWorldTransform);
 }
 
 // Called when the game starts or when spawned
@@ -44,23 +45,34 @@ void ACarrelloActor::Tick(float DeltaTime)
 	GameState = GameState == nullptr? Cast<ARGJGameStateBase>(UGameplayStatics::GetGameState(GetWorld())): GameState;
 	int OneThird = GameState->NumberOfItemToSpawn  / 3;
 	float moduleOfOneThird = GameState->SpawnCounter % OneThird;
-	if (moduleOfOneThird == 0)
-	{
-		if (GameState->SpawnCounter <= OneThird)
+	if (moduleOfOneThird != 0)
+		return;
+	
+		if (GameState->SpawnCounter == OneThird)
 		{
-			LayerUno->bHiddenInGame = true;
-			LayerDue->bHiddenInGame = false ;
+			LayerUno->SetHiddenInGame(false);
+			LayerDue->SetHiddenInGame(true);
+			LayerTre->SetHiddenInGame(true);
 		}
-		else if (GameState->SpawnCounter >= (OneThird * 2) && GameState->SpawnCounter <= (OneThird * 3))
+		else if (GameState->SpawnCounter == OneThird*2)
 		{
-			LayerDue->bHiddenInGame = true;
-			LayerTre->bHiddenInGame = false;
+			LayerDue->SetHiddenInGame(false);
+			LayerUno->SetHiddenInGame(true);
+			LayerTre->SetHiddenInGame(true);
 		}
-		else if (GameState->SpawnCounter >= (OneThird * 3))
+		else if (GameState->SpawnCounter == OneThird * 3)
 		{
-			LayerTre->bHiddenInGame = true;
+			LayerTre->SetHiddenInGame(false);
+			LayerDue->SetHiddenInGame(true);
+			LayerUno->SetHiddenInGame(true);
 		}
-	}
+		else
+		{
+			LayerTre->SetHiddenInGame(true);
+			LayerDue->SetHiddenInGame(true);
+			LayerUno->SetHiddenInGame(true);
+		}
+	
 	
 
 }

@@ -36,11 +36,12 @@ protected:
 private: 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UStaticMeshComponent> Mesh;
-	UPROPERTY(EditAnywhere)
-	TObjectPtr<USkeletalMeshComponent> HandMesh;
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UBoxComponent> BoxCollision;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<USkeletalMeshComponent> HandMesh;
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UWidgetComponent> PriceWidgetComponent;
@@ -49,4 +50,9 @@ private:
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UAnimMontage> OnGrabMontage;
 	void PlayGrabMontage();
+
+
+public:
+
+	FORCEINLINE USkeletalMeshComponent* GetHandMesh() const { return HandMesh; }
 };

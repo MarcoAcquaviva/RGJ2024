@@ -4,36 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameStateBase.h"
+#include "Struct/ShopAttributeInfo.h"
 #include "RGJGameStateBase.generated.h"
 
-UENUM(BlueprintType)
-enum class E_ShopAttribute : uint8
-{
-	Fame UMETA(DisplayName = "Fame") ,
-	Gioco UMETA(DisplayName = "Gioco"),
-	Batteria UMETA(DisplayName = "Batteria"),
-	Sole UMETA(DisplayName = "Sole"),
-	Notte UMETA(DisplayName = "Notte"),
-	Lavoro UMETA(DisplayName = "Lavoro"),
-};
 
-USTRUCT(BlueprintType)
-struct FShopAttributeInfo
-{
-	GENERATED_BODY()
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	E_ShopAttribute Type = E_ShopAttribute::Batteria;
-
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)
-	float Value = 0;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	TObjectPtr<UObject> Image;
-};
 
 class ARGJ_ShoppingItem;
-
 /**
  * 
  */
@@ -45,20 +21,37 @@ class RGJ2024_API ARGJGameStateBase : public AGameStateBase
 public: 
 
 public:
+	/*Spawn*/
 	UPROPERTY(BlueprintReadWrite)
 	TArray<ARGJ_ShoppingItem*> AllShopItems;
-	UPROPERTY(BlueprintReadWrite)
-	TArray<ARGJ_ShoppingItem*> AllShopItemCollected;
+
+	UPROPERTY(EditAnywhere, Category = "Debug")
+	bool bUseDebugObject;
+
+	UPROPERTY(EditAnywhere, Category = "Debug")
+	TSubclassOf<ARGJ_ShoppingItem> DebugObject;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Spawn")
 	int SpawnCounter = 0;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Spawn")
 	int NumberOfItemToSpawn = 10;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Money")
 	float MaxMoneyUsable = 20.5f;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Money")
 	float MoneyOfAllItems = 0.f;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly ,Category = "Money")
 	float CurretMoneyValue = 0.f;
+
+	UFUNCTION(BlueprintCallable)
+	float GetTotalAmout();
+
+	/*Attribute */
+	UPROPERTY(BlueprintReadWrite)
+	TArray<FShopAttributeInfo> AllShopItemCollected;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly )
 	TArray<FShopAttributeInfo> Attributes;
@@ -69,19 +62,26 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	int32 MaxAttributePerGame = 3;
 
-	bool CheckIfGameEnded();
-	bool DidPlayerWin();
-
 	UFUNCTION(BlueprintCallable)
-	float GetTotalAmout();
+	void InitAttributes();
 
 	UFUNCTION(BlueprintCallable)
 	void CalculateAttributeValue();
 
-	UFUNCTION(BlueprintCallable)
-	void InitAttributes();
-
 	void UpdateInStatistics();
+
+	UFUNCTION(BlueprintCallable)
+	float GetAttributeValue(E_ShopAttribute value);
+
+	void AddAttributeToCollection(TArray<FShopAttributeInfo> Array);
+
+	/*Core logic */
+	bool CheckIfGameEnded();
+	bool DidPlayerWin();
+
 private: 
+	
+	void ResetAttributeChosenStatistics();
+
 
 };

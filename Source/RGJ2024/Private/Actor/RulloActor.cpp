@@ -20,6 +20,7 @@ ARulloActor::ARulloActor()
 	Mesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Block);
 	Mesh->SetCollisionResponseToChannel(ECollisionChannel::ECC_Visibility, ECollisionResponse::ECR_Block);
 	Mesh->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	SetRootComponent(Mesh);
 
 	BoxCollision = CreateDefaultSubobject<UBoxComponent>(TEXT("BoxCollision"));
 	BoxCollision->AttachToComponent(Mesh, FAttachmentTransformRules::KeepWorldTransform);
@@ -40,7 +41,7 @@ void ARulloActor::BeginPlay()
 void ARulloActor::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-	ARGJGameStateBase* GameState = Cast<ARGJGameStateBase>(UGameplayStatics::GetGameState(GetWorld()));
+	GameState = GameState == nullptr ? Cast<ARGJGameStateBase>(UGameplayStatics::GetGameState(this)) : GameState.Get();
 	if (GameState && !AreItemSpawned)
 	{
 		while (GameState->AllShopItems.Num() < GameState->NumberOfItemToSpawn)
@@ -51,18 +52,18 @@ void ARulloActor::Tick(float DeltaSeconds)
 	}
 }
 
-
-
 void ARulloActor::InitRandomObject()
 {
 	int maxIndex = ObjectsToSpawn.Num();
 	int randomIndex = UKismetMathLibrary::RandomInteger(maxIndex);
 	TSubclassOf<ARGJ_ShoppingItem> ObjectToSpawn = ObjectsToSpawn[randomIndex];
+	if (GameState->bUseDebugObject)
+		ObjectToSpawn = GameState->DebugObject;
 	
 	FActorSpawnParameters SpawnInfo;
 
 	ARGJ_ShoppingItem* ItemSpawned = GetWorld()->SpawnActorDeferred<ARGJ_ShoppingItem>(ObjectToSpawn, GetSpawnTransform());
-	ARGJGameStateBase* GameState = Cast<ARGJGameStateBase>(UGameplayStatics::GetGameState(GetWorld()));
+	GameState = GameState == nullptr ? Cast<ARGJGameStateBase>(UGameplayStatics::GetGameState(this)) : GameState.Get();
 	if (GameState)
 	{
 		GameState->AllShopItems.Add(ItemSpawned);
@@ -74,7 +75,7 @@ void ARulloActor::InitRandomObject()
 
 void ARulloActor::SpawnShopItem()
 {
-	ARGJGameStateBase* GameState = Cast<ARGJGameStateBase>(UGameplayStatics::GetGameState(GetWorld()));
+	GameState = GameState == nullptr ? Cast<ARGJGameStateBase>(UGameplayStatics::GetGameState(this)) : GameState.Get();
 	if (GameState)
 	{
 		if (GameState->SpawnCounter >= GameState->NumberOfItemToSpawn)
@@ -83,8 +84,11 @@ void ARulloActor::SpawnShopItem()
 			return;
 		}
 		ARGJ_ShoppingItem* ObjectToSpawn = GameState->AllShopItems[GameState->SpawnCounter];
-		ObjectToSpawn->FinishSpawning(GetSpawnTransform());
-		ObjectToSpawn->SetHidden(false);
+		if (ObjectToSpawn)
+		{
+			ObjectToSpawn->FinishSpawning(GetSpawnTransform());
+			ObjectToSpawn->SetHidden(false);
+		}
 		GameState->SpawnCounter++;
 	}
 }

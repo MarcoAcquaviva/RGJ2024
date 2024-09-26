@@ -9,6 +9,7 @@
 class ARGJ_ShoppingItem;
 class UBoxComponent;
 class UArrowComponent;
+class ARGJGameStateBase;
 
 UCLASS()
 class RGJ2024_API ARulloActor : public AActor
@@ -30,12 +31,15 @@ public:
 private:
 
 protected:
-	UPROPERTY(EditAnywhere, BluePrintReadOnly)
+	UPROPERTY(EditAnywhere, BluePrintReadWrite)
 	TObjectPtr<UStaticMeshComponent> Mesh;
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<UBoxComponent> BoxCollision;
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UArrowComponent> SpawnPointArrow;
+
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<ARGJGameStateBase> GameState;
 
 	UFUNCTION()
 	void InitRandomObject();

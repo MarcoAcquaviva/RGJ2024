@@ -8,6 +8,7 @@
 
 class UTextBlock;
 class USizeBox;
+class UAttributeBarUserWidget;
 /**
  * 
  */
@@ -20,28 +21,18 @@ public:
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UTextBlock> TextBox_GameStatus;
 
-	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UTextBlock> TextBox_StateOne;
+	UFUNCTION(BlueprintImplementableEvent)
+	void SetBars();
 
-	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UTextBlock> TextBox_StateTwo;
+	UPROPERTY(VisibleAnywhere,BlueprintReadWrite,meta = (BindWidget))
+	TObjectPtr<UAttributeBarUserWidget> Progress_StateOne;
 
-	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UTextBlock> TextBox_StateThree;
-	
-	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<USizeBox> SizeBox_GameRate;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	TObjectPtr<UAttributeBarUserWidget> Progress_StateTwo;
 
-	UPROPERTY(BlueprintReadOnly)
-	TObjectPtr<UObject>ImageOne;
-
-	UPROPERTY(BlueprintReadOnly)
-	TObjectPtr<UObject>ImageTwo;
-
-	UPROPERTY(BlueprintReadOnly)
-	TObjectPtr<UObject>ImageThree;
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, meta = (BindWidget))
+	TObjectPtr<UAttributeBarUserWidget> Progress_StateThree;
 
 	FORCEINLINE UTextBlock* GetTextGameStatus() const { return TextBox_GameStatus; }
-	FORCEINLINE USizeBox* GetSizeBox() const { return SizeBox_GameRate; }
 
 };

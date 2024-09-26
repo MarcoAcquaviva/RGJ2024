@@ -2,18 +2,58 @@
 
 
 #include "HUD/Widget/AttributeBarUserWidget.h"
-#include "Components/Image.h"
+#include "Game/RGJGameStateBase.h"
+#include "Kismet/GameplayStatics.h"
+#include "Components/ProgressBar.h"
+#include "Styling/SlateTypes.h"
 #include "Styling/SlateBrush.h"
-#include "RGJ_ShoppingItem.h"
 
-void UAttributeBarUserWidget::SetPercentage()
+void UAttributeBarUserWidget::NativeOnInitialized()
 {
-	
+	GameState = Cast<ARGJGameStateBase>(UGameplayStatics::GetGameState(this));	
 }
 
-void UAttributeBarUserWidget::SetImage()
+void UAttributeBarUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
-	FSlateBrush Brush;
-	Brush.SetResourceObject(AttributeInfo->Image);
-	Image->SetBrush(Brush);
+	SetShopAttributePercentage();
+}
+
+void UAttributeBarUserWidget::SetAttributeInfo(const FShopAttributeInfo& info)
+{
+	AttributeInfo = info;
+	SetShopAttributeImage();
+	SetShopAttributePercentage();
+}
+
+void UAttributeBarUserWidget::SetShopAttributePercentage()
+{
+	float percentValue = GetMaxPercentagaRatio();
+	ProgressBar->SetPercent(percentValue);
+}
+
+void UAttributeBarUserWidget::SetShopAttributeImage()
+{
+	FSlateBrush Background;
+	Background.SetResourceObject(AttributeInfo.BackgroundImage);
+	FSlateBrush Foreground;
+	Foreground.SetResourceObject(AttributeInfo.FillImage);
+	FProgressBarStyle progressBarStyle;
+	progressBarStyle.SetBackgroundImage(Background);
+	progressBarStyle.SetFillImage(Foreground);
+	ProgressBar->SetWidgetStyle(progressBarStyle);
+}
+
+float UAttributeBarUserWidget::GetMaxPercentagaRatio()
+{
+	if (GameState)
+	{
+		float currValue = AttributeInfo.Value;
+		float maxValue = 100;
+		for (auto& attribute : GameState->Attributes)
+			if (attribute.Type == AttributeInfo.Type)
+				maxValue = attribute.Value;
+		return currValue / maxValue;
+	}
+
+	return 0.f;
 }

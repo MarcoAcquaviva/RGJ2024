@@ -13,6 +13,7 @@
 #include "HUD/Widget/EndGameWidget.h"
 #include "Components/TextBlock.h"
 #include "Pawn/RGJPawn.h"
+#include "Struct/ShopAttributeInfo.h"
 
 void ARGJPlayerController::PlayerTick(const float DeltaTime)
 {
@@ -56,20 +57,11 @@ void ARGJPlayerController::UpdateEndGame()
 		UEndGameWidget* EndGameWidget = HUD->GetEndGameWidget();
 		if (EndGameWidget)
 		{
-			EndGameWidget->SetVisibility(ESlateVisibility::Visible);
+			GameState->CalculateAttributeValue();
 			FString gameStatus = GameState->DidPlayerWin() ? "You Won" : "You Lost";
 			EndGameWidget->TextBox_GameStatus->SetText(FText::FromString(gameStatus));
-			GameState->CalculateAttributeValue();
-			FShopAttributeInfo First = GameState->AttributesChosen[0];
-			FShopAttributeInfo Second = GameState->AttributesChosen[1];
-			FShopAttributeInfo Third = GameState->AttributesChosen[2];
-			EndGameWidget->TextBox_StateOne->SetText(FText::FromString(FString::SanitizeFloat(First.Value)));
-			EndGameWidget->TextBox_StateTwo->SetText(FText::FromString(FString::SanitizeFloat(Second.Value)));
-			EndGameWidget->TextBox_StateThree->SetText(FText::FromString(FString::SanitizeFloat(Third.Value)));
-			EndGameWidget->ImageOne = First.Image;
-			EndGameWidget->ImageTwo = Second.Image;
-			EndGameWidget->ImageThree = Third.Image;
-
+			EndGameWidget->SetBars();
+			EndGameWidget->SetVisibility(ESlateVisibility::Visible);
 		}
 		UGameplayStatics::SetGamePaused(GetWorld(), !IsPaused);
 		if (GEngine)
@@ -125,19 +117,16 @@ void ARGJPlayerController::OnComplete_ClickAction()
 		GEngine->AddOnScreenDebugMessage(-1, 15.0f, FColor::Yellow, TEXT("Clicked!"));
 
 	ARGJPawn* MyPawn = Cast<ARGJPawn>(GetPawn());
-	if (MyPawn)
-	{
-		MyPawn->PlayMontage();
-	}
+	if (MyPawn) MyPawn->PlayMontage();
+	
 	ARGJ_ShoppingItem* ItemFound = Cast<ARGJ_ShoppingItem>(CursorHit.GetActor());
-	if(ItemFound && ItemFound->IsClickable)
-	ThisActorHit->Destroy();
+	if (ItemFound == nullptr || !ItemFound->IsClickable)
+		return;
+
 	ARGJGameStateBase* GameState = Cast<ARGJGameStateBase>(UGameplayStatics::GetGameState(GetWorld()));
-	if (GameState)
-	{
-		GameState->AllShopItemCollected.Add(ItemFound);
-	}
-	UpdateEndGame();
+	if (GameState) GameState->AddAttributeToCollection(ItemFound->GetAttributes());
+	
+	ThisActorHit->Destroy();
 	
 }
 

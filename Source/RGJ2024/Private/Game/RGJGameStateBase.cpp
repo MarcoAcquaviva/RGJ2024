@@ -6,12 +6,12 @@
 #include "Kismet/GameplayStatics.h"
 #include "Game/RGJGameModeBase.h"
 #include "Kismet/KismetMathLibrary.h"
-
+#include "Struct/ShopAttributeInfo.h"
+#include "Containers/Set.h"
 
 
 bool ARGJGameStateBase::CheckIfGameEnded()
 {
-
 	if (CurretMoneyValue >= MaxMoneyUsable)
 		return true;
 
@@ -25,7 +25,6 @@ bool ARGJGameStateBase::CheckIfGameEnded()
 		}
 		return true;
 	}
-
 
 	return false;
 }
@@ -49,41 +48,27 @@ float ARGJGameStateBase::GetTotalAmout()
 	return amout;
 }
 
-void ARGJGameStateBase::CalculateAttributeValue()
-{
-	for (auto& Item : AllShopItemCollected)
-	{
-		if (Item == nullptr)
-			continue;
-
-			TArray<FShopAttributeInfo> shopsInfo = Item->GetAttributes();
-			for (auto& shop : shopsInfo)
-			{
-				if (AttributesChosen.Contains(shop.Type))
-				{
-					AttributesChosen[shop.Type].Value += shop.Value;
-				}
-			}
-		
-	}
-}
 
 void ARGJGameStateBase::InitAttributes()
 {
 	int32 NumberOfItems = Attributes.Num();
 
 	TSet<int32> RandomIndex;
+	TSet<E_ShopAttribute> AttributesChosenType;
 	while (AttributesChosen.Num() < MaxAttributePerGame)
 	{
 		int32 randomValue = UKismetMathLibrary::RandomInteger(Attributes.Num());
-		if (!RandomIndex.Contains(randomValue))
+		FShopAttributeInfo& randomAttChosen = Attributes[randomValue];
+		if (!RandomIndex.Contains(randomValue) && !AttributesChosenType.Contains(randomAttChosen.Type))
 		{
 			RandomIndex.Add(randomValue);
 			FShopAttributeInfo attChosen;
-			attChosen.Type = Attributes[randomValue].Type;
-			attChosen.Value = Attributes[randomValue].Value;
-			attChosen.Image = Attributes[randomValue].Image;
-			AttributesChosen.Add(Attributes[randomValue].Type ,attChosen);
+			attChosen.Type = randomAttChosen.Type;
+			attChosen.Value = 0.f;
+			attChosen.BackgroundImage = randomAttChosen.BackgroundImage;
+			attChosen.FillImage = randomAttChosen.FillImage;
+			AttributesChosenType.Add(randomAttChosen.Type);
+			AttributesChosen.Add(randomAttChosen.Type ,attChosen);
 		}
 	}
 
@@ -94,3 +79,38 @@ void ARGJGameStateBase::UpdateInStatistics()
 	CalculateAttributeValue();
 }
 
+float ARGJGameStateBase::GetAttributeValue(E_ShopAttribute value)
+{
+	if (AttributesChosen.Contains(value))
+		return AttributesChosen[value].Value;
+	return 0.0f;
+}
+
+void ARGJGameStateBase::AddAttributeToCollection(TArray<FShopAttributeInfo> Array)
+{
+	for (FShopAttributeInfo item : Array)
+	{
+		AllShopItemCollected.Add(item);
+	}
+}
+
+void ARGJGameStateBase::CalculateAttributeValue()
+{
+	if (AllShopItemCollected.IsEmpty() || AttributesChosen.IsEmpty())
+		return;
+
+	ResetAttributeChosenStatistics();
+
+	for (auto& shop : AllShopItemCollected)
+		if (AttributesChosen.Contains(shop.Type))
+			AttributesChosen[shop.Type].Value += shop.Value;
+
+}
+
+void ARGJGameStateBase::ResetAttributeChosenStatistics()
+{
+	TArray<E_ShopAttribute> ItemInfoKeys;
+	AttributesChosen.GetKeys(ItemInfoKeys);
+	for (auto& item : ItemInfoKeys)
+		AttributesChosen[item].Value = 0;
+}

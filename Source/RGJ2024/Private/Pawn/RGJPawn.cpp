@@ -3,7 +3,8 @@
 
 #include "Pawn/RGJPawn.h"
 #include "Components/SkeletalMeshComponent.h"
-
+#include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
 
 // Sets default values
 ARGJPawn::ARGJPawn()
@@ -14,7 +15,16 @@ ARGJPawn::ARGJPawn()
 	SkeletonMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Skeleton Mese"));
 	SkeletonMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	SkeletonMesh->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
-	
+
+	//SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
+	////SpringArm->SetWorldLocation(FVector(-50, 0, 35));
+	//SpringArm->SetRelativeRotation(FRotator(0, -40, 0));
+	//SpringArm->TargetArmLength = 270.f;
+	//SpringArm->SocketOffset = FVector(-50, 0, 35);
+
+	//Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	//Camera->FieldOfView = 80.f;
+	//Camera->AttachToComponent(SpringArm,FAttachmentTransformRules::KeepWorldTransform);
 }
 
 // Called when the game starts or when spawned

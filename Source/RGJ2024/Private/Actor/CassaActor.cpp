@@ -12,6 +12,7 @@
 #include "Game/RGJGameStateBase.h"
 #include "HUD/RGJHUD.h"
 #include "Player/RGJPlayerController.h"
+#include "AnimInstance/CassaAnimInstance.h"
 
 // Sets default values
 ACassaActor::ACassaActor()
@@ -68,14 +69,12 @@ void ACassaActor::Tick(float DeltaTime)
 				PriceSum = GameState->CurretMoneyValue;
 				UpdatePriceWidget();
 				ShoppingItem->PriceAdded = true;
+				UCassaAnimInstance* animInstance = Cast<UCassaAnimInstance>(HandMesh->GetAnimInstance());
+				animInstance->ItemsToGrab.Add(ShoppingItem);
+				//prendo l'anim instance e aggiungo i prodotti 
+				//Eseguo il montage
+				//Eseguo il notify che mi distrugge tutto ed attacca i socket
 				PlayGrabMontage();
-				ShoppingItem->Destroyed();
-
-				ARGJPlayerController* PlayerController = Cast<ARGJPlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
-				if (PlayerController)
-				{
-					PlayerController->UpdateEndGame();
-				}
 			}
 		}
 	}
@@ -85,7 +84,7 @@ void ACassaActor::UpdatePriceWidget()
 {
 	if (PriceWidgetComponent)
 	{
-		URGJPriceWidget* PriceWidget = Cast< URGJPriceWidget>(PriceWidgetComponent->GetWidget());
+		URGJPriceWidget* PriceWidget = Cast<URGJPriceWidget>(PriceWidgetComponent->GetWidget());
 		if (PriceWidget)
 		{
 			UTextBlock* TextBlock = PriceWidget->PriceTextBox;

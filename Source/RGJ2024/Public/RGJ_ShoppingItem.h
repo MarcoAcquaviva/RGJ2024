@@ -4,13 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Struct/ShopAttributeInfo.h"
 #include "RGJ_ShoppingItem.generated.h"
 
 class UWidgetComponent;
+class UBoxComponent;
 class UProjectileMovementComponent;
 class USoundCue;
 class UParticleSystem;
-struct FShopAttributeInfo;
+
 UCLASS()
 class RGJ2024_API ARGJ_ShoppingItem : public AActor
 {
@@ -37,6 +39,9 @@ public:
 private:
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UStaticMeshComponent> Mesh;
+
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UBoxComponent> BoxComponent;
 
 	UPROPERTY(EditAnywhere)
 	TObjectPtr<UWidgetComponent> PriceWidgetComponent;
