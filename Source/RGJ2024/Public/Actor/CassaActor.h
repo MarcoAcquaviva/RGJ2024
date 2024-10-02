@@ -8,7 +8,6 @@
 
 class UBoxComponent;
 class UWidgetComponent;
-class UAnimMontage;
 class USkeletalMeshComponent;
 
 UCLASS()

@@ -33,10 +33,10 @@ ARGJ_ShoppingItem::ARGJ_ShoppingItem()
 	BoxComponent->SetCollisionResponseToChannel(ECollisionChannel::ECC_Pawn, ECollisionResponse::ECR_Block);
 	BoxComponent->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	BoxComponent->SetSimulatePhysics(false);
-	BoxComponent->AttachToComponent(Mesh, FAttachmentTransformRules::KeepWorldTransform);
+	BoxComponent->SetupAttachment(Mesh);
 
 	PriceWidgetComponent = CreateDefaultSubobject<UWidgetComponent>(TEXT("PriceWidgetComponent"));
-	PriceWidgetComponent->AttachToComponent(Mesh, FAttachmentTransformRules::KeepWorldTransform);
+	PriceWidgetComponent->SetupAttachment(Mesh);
 	HideWidget();	
 }
 
